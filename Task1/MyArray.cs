@@ -35,6 +35,7 @@ namespace Task1
                 }
                 Console.WriteLine();
             }
+
         }
         public void Change(int posX, int posY, int newX, int newY)
         {
@@ -50,34 +51,59 @@ namespace Task1
         {
             int oldX, oldY;
             int newX, newY;
-            // Console.SetCursorPosition(PositionX, PositionY);
+            
             oldX = PositionX;
             oldY = PositionY;
             newX = PositionX;
             newY = PositionY;
+            Console.SetCursorPosition(PositionX, PositionY);
             switch (key)
-            {
-                //выход за пределы
+            {               
                 case ConsoleKey.RightArrow:
-                    if(PositionX !=  arr.Length)
+                    if(PositionX != arr.GetLength(0)-1)
                         PositionX++;
-                    newX = PositionX;
-                    break;
-                case ConsoleKey.LeftArrow:
-                    if (PositionX != arr.Length)
+                    else
                         PositionX--;
                     newX = PositionX;
                     break;
+                case ConsoleKey.LeftArrow:
+                    if (PositionX != 0 )
+                        PositionX--;
+                    else
+                        PositionX++;
+                    newX = PositionX;
+                    break;
                 case ConsoleKey.UpArrow:
-                    PositionY--;
+                    if (PositionY <= 0)
+                        PositionY++;
+                    else
+                        PositionY--;
                     newY = PositionY;
                     break;
                 case ConsoleKey.DownArrow:
-                    PositionY++;
+                    if (PositionY != arr.GetLength(1) - 1)
+                        PositionY++;
+                    else
+                        PositionY--;
                     newY = PositionY;
                     break;
             }
             Change(oldX, oldY, newX, newY);
+           
+        }
+        public void Engine()
+        {
+
+            CreateArray();
+            ConsoleKey key;
+            Print();
+            do
+            {
+                key = Console.ReadKey().Key;
+                Swap(key);
+              
+            } while (key != ConsoleKey.Enter);
+            Print();
         }
 
     }
