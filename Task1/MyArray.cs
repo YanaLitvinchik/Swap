@@ -8,7 +8,7 @@ namespace Task1
 {
     class MyArray
     {
-        int[,] arr = new int[5, 5];
+        int[,] arr = new int[2,2];
         private int PositionX { get; set; }
         private int PositionY { get; set; }
         public int Current { get; set; }
@@ -27,6 +27,7 @@ namespace Task1
         }
         public void Print()
         {
+            Console.Clear();
             for (int i = 0; i < arr.GetLength(0); i++)
             {
                 for (int j = 0; j < arr.GetLength(1); j++)
@@ -35,6 +36,7 @@ namespace Task1
                 }
                 Console.WriteLine();
             }
+            Console.SetCursorPosition(PositionX, PositionY);
 
         }
         public void Change(int posX, int posY, int newX, int newY)
@@ -46,6 +48,8 @@ namespace Task1
             var tmp = arr[posX, posY];
             arr[posX, posY] = arr[newX, newY];
             arr[newX, newY] = tmp;
+            if (arr[posX, posY] > 9)
+                arr[posX, posY] = 9;
         }
         public void Swap(ConsoleKey key)
         {
@@ -56,39 +60,30 @@ namespace Task1
             oldY = PositionY;
             newX = PositionX;
             newY = PositionY;
-            Console.SetCursorPosition(PositionX, PositionY);
             switch (key)
             {               
                 case ConsoleKey.RightArrow:
                     if(PositionX != arr.GetLength(0)-1)
-                        PositionX++;
-                    else
-                        PositionX--;
+                        PositionX++;                   
                     newX = PositionX;
                     break;
                 case ConsoleKey.LeftArrow:
                     if (PositionX != 0 )
-                        PositionX--;
-                    else
-                        PositionX++;
+                        PositionX--;                   
                     newX = PositionX;
                     break;
                 case ConsoleKey.UpArrow:
-                    if (PositionY <= 0)
-                        PositionY++;
-                    else
+                    if (PositionY != 0)
                         PositionY--;
                     newY = PositionY;
                     break;
                 case ConsoleKey.DownArrow:
                     if (PositionY != arr.GetLength(1) - 1)
                         PositionY++;
-                    else
-                        PositionY--;
                     newY = PositionY;
                     break;
             }
-            Change(oldX, oldY, newX, newY);
+            Change(oldY, oldX, newY, newX);
            
         }
         public void Engine()
@@ -101,9 +96,9 @@ namespace Task1
             {
                 key = Console.ReadKey().Key;
                 Swap(key);
+            Print();
               
             } while (key != ConsoleKey.Enter);
-            Print();
         }
 
     }
